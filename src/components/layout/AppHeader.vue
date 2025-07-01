@@ -51,12 +51,7 @@
           Welcome, {{ authStore.user?.email }}
         </li>
         <li class="nav-item" v-if="authStore.isAuthenticated">
-          <button
-            class="btn ms-2"
-            @click="[authStore.signOutUser(), router.push({ name: APP_ROUTE_NAMES.SIGN_IN })]"
-          >
-            Sign Out
-          </button>
+          <button class="btn ms-2" @click="handleSignOut">Sign Out</button>
         </li>
       </ul>
     </div>
@@ -99,5 +94,10 @@ async function createConversation(friendId: string, friend: string) {
       })
     }
   }
+}
+
+async function handleSignOut() {
+  await authStore.signOutUser()
+  router.push({ name: APP_ROUTE_NAMES.SIGN_IN })
 }
 </script>
