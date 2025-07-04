@@ -1,20 +1,22 @@
 <template>
   <div class="chat-container">
     <div class="chat-content" ref="containerRef" @scroll.passive="handleScroll">
-      <div
-        v-for="message in messages"
-        :key="message.id"
-        :class="['message', message.senderId === authStore.user?.uid ? 'sent' : 'received']"
-      >
-        <div class="content">{{ message.content }}</div>
+      <div class="w-70 d-flex flex-column">
         <div
-          :class="[
-            message.senderId === authStore.user?.uid ? 'timestamp-send' : 'timestamp-received',
-          ]"
+          v-for="message in messages"
+          :key="message.id"
+          :class="['message mb-1', message.senderId === authStore.user?.uid ? 'sent' : 'received']"
         >
-          {{ formatFriendlyTime(message.timestamp, userTimeZone) }}
+            <div class="content">{{ message.content }}</div>
+            <div
+            :class="[
+              message.senderId === authStore.user?.uid ? 'timestamp-send' : 'timestamp-received',
+            ]"
+            >
+            {{ formatFriendlyTime(message.timestamp, userTimeZone) }}
+            </div>
+          </div>
         </div>
-      </div>
     </div>
   </div>
 </template>
@@ -123,9 +125,9 @@ async function loadMoreMessages() {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  align-items: center;
 }
 .message {
-  max-width: 60%;
   padding: 0.5rem 1rem;
   border-radius: 12px;
   word-break: break-word;
@@ -135,12 +137,12 @@ async function loadMoreMessages() {
   background-color: #0d6efd;
   color: #fdfdfd;
   text-align: end;
-  margin-right: 22.7%;
+  max-width: 60%;
 }
 .received {
   align-self: flex-start;
-  background-color: #f0f2f5;
-  margin-left: 23.5%;
+  background-color: #424141;
+  max-width: 60%;
 }
 .timestamp-send {
   font-size: 0.75rem;
@@ -149,7 +151,7 @@ async function loadMoreMessages() {
 }
 .timestamp-received {
   font-size: 0.75rem;
-  color: #888;
+  color: #c9c9c9;
   margin-top: 0.25rem;
 }
 </style>

@@ -1,24 +1,69 @@
-<!-- <template>
-  <div class="d-flex flex-column min-vh-100">
-    <Header />
-    <div class="d-flex flex-row flex-grow-1">
-      <Sidebar class="w-64 bg-gray-100" />
-      <main class="flex-grow-1 p-1">
-        <Content />
-      </main>
-    </div>
-    <Footer />
-  </div>
-</template> -->
-
 <template>
   <RouterView />
 </template>
 
 <script setup lang="ts">
-import Header from './components/layout/AppHeader.vue'
-import Sidebar from './components/layout/AppSidebar.vue'
-import Content from './components/layout/AppContent.vue'
-import Footer from './components/layout/AppFooter.vue'
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
+import { onMounted, onUnmounted, watch } from 'vue'
+import { useAuthStore } from '@/stores/authStore'
+import { useConversationStore } from '@/stores/conversationStore'
+
+const authStore = useAuthStore()
+const conversationStore = useConversationStore()
+
+let originalTitle = document.title
+let titleInterval: number | undefined = undefined
+
+function startFlashingTitle(unreadCount: number) {
+  if (document.hidden && !titleInterval) {
+    titleInterval = window.setInterval(() => {
+      document.title =
+        document.title === originalTitle
+          ? `(${unreadCount}) New message`
+          : originalTitle
+    }, 1000)
+  }
+}
+
+function stopFlashingTitle() {
+  if (titleInterval) {
+    clearInterval(titleInterval)
+    titleInterval = undefined
+  }
+  document.title = originalTitle
+}
+
+// Theo dõi thay đổi danh sách cuộc trò chuyện
+watch(
+  () => conversationStore.conversations,
+  (conversations) => {
+    const unreadCount = conversations.filter((c) =>
+      c.lastMessage?.recipientIsUnread &&
+      c.lastMessage?.senderId !== authStore.user?.uid
+    ).length
+
+    if (unreadCount > 0  && document.hidden) {
+      startFlashingTitle(unreadCount)
+    } else {
+      stopFlashingTitle()
+    }
+  },
+  { deep: true, immediate: true }
+)
+
+function handleVisibilityChange() {
+  if (!document.hidden) {
+    stopFlashingTitle()
+  }
+}
+
+onMounted(() => {
+  originalTitle = document.title
+  document.addEventListener('visibilitychange', handleVisibilityChange)
+})
+
+onUnmounted(() => {
+  stopFlashingTitle()
+  document.removeEventListener('visibilitychange', handleVisibilityChange)
+})
 </script>

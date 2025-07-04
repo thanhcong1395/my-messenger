@@ -4,7 +4,7 @@
       <ChatContent />
     </div>
 
-    <div class="chat-input">
+    <div class="chat-input border-top">
       <ChatInput />
     </div>
   </div>
@@ -36,8 +36,6 @@ const conversationStore = useConversationStore()
 
 /* Input gắn phía dưới vùng content, không gắn với viewport */
 .chat-input {
-  background: white;
-  border-top: 1px solid #ddd;
   padding: 1rem;
   flex-shrink: 0; /* đảm bảo không bị nén */
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.03);

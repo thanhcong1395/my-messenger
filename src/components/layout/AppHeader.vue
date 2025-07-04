@@ -3,7 +3,7 @@
     <div class="container-fluid d-flex align-items-center justify-content-between">
       <a class="navbar-brand me-3" href="#">
         <img
-          src="../../assets/logo.svg"
+          src="../../assets/logo.png"
           width="30"
           height="30"
           class="d-inline-block align-top"
@@ -26,13 +26,13 @@
             placeholder="Search conversations"
             aria-label="Search"
           />
-          <button class="btn btn-outline-primary" type="submit">Search</button>
+          <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
         </form>
 
         <ul
           v-if="searchTerm && filteredUsers.length"
           class="list-group position-absolute mt-5 shadow"
-          style="width: 420px; transform: translateX(-40px)"
+          style="width: 432px; transform: translateX(-33px)"
         >
           <li
             v-for="user in filteredUsers"
@@ -51,7 +51,7 @@
           Welcome, {{ authStore.user?.email }}
         </li>
         <li class="nav-item" v-if="authStore.isAuthenticated">
-          <button class="btn ms-2" @click="handleSignOut">Sign Out</button>
+          <button class="btn btn-sm ms-2" @click="handleSignOut">Sign Out</button>
         </li>
       </ul>
     </div>

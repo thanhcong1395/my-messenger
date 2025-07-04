@@ -1,5 +1,5 @@
 <template>
-  <aside class="sidebar">
+  <aside class="sidebar border-end">
     <h3 class="sidebar-title">Conversations</h3>
     <ul class="chat-list">
       <li
@@ -58,10 +58,8 @@ function selectConversation(conversationId: string) {
 
 <style scoped>
 .sidebar {
-  width: 340px;
-  background-color: #f1f1f1;
+  width: 20rem;
   padding: 1rem;
-  border-right: 1px solid #dfdfdf;
   overflow-y: auto;
 }
 
@@ -86,7 +84,7 @@ function selectConversation(conversationId: string) {
 }
 
 .chat-item:hover {
-  background-color: #e2e6ea;
+  background-color: #424141;
 }
 
 .chat-item.active {
@@ -100,8 +98,10 @@ function selectConversation(conversationId: string) {
 }
 
 .chat-preview {
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-size: 0.9rem;
-  color: #555;
+  color: #d3d2d2;
 }
 
 .chat-item.active .chat-name,
