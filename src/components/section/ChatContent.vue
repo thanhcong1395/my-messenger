@@ -1,22 +1,22 @@
 <template>
   <div class="chat-container">
     <div class="chat-content" ref="containerRef" @scroll.passive="handleScroll">
-      <div class="w-70 d-flex flex-column">
+      <div style="width: 50rem;" class="d-flex flex-column">
         <div
           v-for="message in messages"
           :key="message.id"
           :class="['message mb-1', message.senderId === authStore.user?.uid ? 'sent' : 'received']"
         >
-            <div class="content">{{ message.content }}</div>
-            <div
-            :class="[
-              message.senderId === authStore.user?.uid ? 'timestamp-send' : 'timestamp-received',
-            ]"
-            >
-            {{ formatFriendlyTime(message.timestamp, userTimeZone) }}
-            </div>
+          <div class="content">{{ message.content }}</div>
+          <div
+          :class="[
+            message.senderId === authStore.user?.uid ? 'timestamp-send' : 'timestamp-received',
+          ]"
+          >
+          {{ formatFriendlyTime(message.timestamp, userTimeZone) }}
           </div>
         </div>
+      </div>
     </div>
   </div>
 </template>
